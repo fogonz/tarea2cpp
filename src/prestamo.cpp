@@ -20,7 +20,11 @@ TPrestamo crearTPrestamo(TSocio socio, TLibro libro, TFecha fechaRetiro){
 void imprimirTPrestamo(TPrestamo prestamo){
   printf("Préstamo de libro %s a %s %s.\n", tituloTLibro(prestamo -> prestamoLibro), nombreTSocio(prestamo -> prestamoSocio), apellidoTSocio(prestamo -> prestamoSocio));
   imprimirTFecha(prestamo -> fechaRetiro);
-  imprimirTFecha(prestamo -> fechaDevolucion);
+  if (prestamo -> fechaDevolucion == NULL){
+    printf("No retornado\n"); 
+  } else {
+    imprimirTFecha(prestamo -> fechaDevolucion);
+  }
 }
 
 void liberarTPrestamo(TPrestamo &prestamo){
@@ -35,19 +39,19 @@ void liberarTPrestamo(TPrestamo &prestamo){
 }
 
 TSocio socioTPrestamo(TPrestamo prestamo){
-  return NULL;
+  return prestamo -> prestamoSocio;
 }
  
 TFecha fechaRetiroTPrestamo(TPrestamo prestamo){
-  return NULL;
+  return prestamo -> fechaRetiro;
 }
 
 TFecha fechaDevolucionTPrestamo(TPrestamo prestamo){
-  return NULL;
+  return prestamo -> fechaDevolucion;
 }
 
 TLibro libroTPrestamo(TPrestamo prestamo){
-  return NULL;
+  return prestamo -> prestamoLibro;
 }
 
 bool fueRetornadoTPrestamo(TPrestamo prestamo){
