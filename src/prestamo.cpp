@@ -2,6 +2,10 @@
 #include "../include/prestamo.h"
 
 struct rep_prestamo {
+  TSocio prestamoSocio;
+  TLibro prestamoLibro;
+  TFecha fechaRetiro;
+  TFecha fechaDevolución;
 };
 
 TPrestamo crearTPrestamo(TSocio socio, TLibro libro, TFecha fechaRetiro){

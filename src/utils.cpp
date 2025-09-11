@@ -38,6 +38,3 @@ void leerRestoLinea(char* cs) { scanf("%[^\n]", cs); }
 void leerString(char* cs) { scanf(" \"%[^\"]\"", cs); }
 
 void descartarRestoLinea() { char resto[256]; scanf("%[^\n]", resto); }
-
-
-//sexoanal

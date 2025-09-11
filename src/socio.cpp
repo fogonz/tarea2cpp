@@ -98,4 +98,3 @@ TSocio copiarTSocio(TSocio socio){
     return copiaSocio;
 }
 
-//sexooooooooooooo
