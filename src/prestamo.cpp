@@ -9,22 +9,21 @@ struct rep_prestamo {
 };
 
 TPrestamo crearTPrestamo(TSocio socio, TLibro libro, TFecha fechaRetiro){
-  return NULL;
-}
- 
-void imprimirTPrestamo(TPrestamo prestamo){
+  TPrestamo prestamoNuevo = new rep_prestamo;
+  prestamoNuevo -> prestamoSocio = socio;
+  prestamoNuevo -> prestamoLibro = libro;
+  prestamoNuevo -> fechaRetiro = fechaRetiro;
+
+  return prestamoNuevo;
 }
 
+void imprimirTPrestamo(TPrestamo prestamo){
+  printf("Préstamo de libro %s a %s %s.\n", tituloTLibro(prestamo -> prestamoLibro), nombreTSocio(prestamo -> prestamoSocio), apellidoTSocio(prestamo -> prestamoSocio));
+  imprimirTFecha(prestamo -> fechaRetiro);
+  imprimirTFecha(prestamo -> fechaDevolucion);
+}
 
 void liberarTPrestamo(TPrestamo &prestamo){
-  if (prestamo != NULL) {
-    liberarTSocio(prestamo->prestamoSocio);
-    liberarTLibro(prestamo->prestamoLibro);
-    liberarTFecha(prestamo->fechaRetiro);
-    liberarTFecha(prestamo->fechaDevolucion);
-    delete prestamo;
-    prestamo = NULL;
-  }
 }
 
 TSocio socioTPrestamo(TPrestamo prestamo){
