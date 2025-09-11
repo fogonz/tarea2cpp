@@ -24,6 +24,14 @@ void imprimirTPrestamo(TPrestamo prestamo){
 }
 
 void liberarTPrestamo(TPrestamo &prestamo){
+  if (prestamo != NULL) {
+    liberarTSocio(prestamo->prestamoSocio);
+    liberarTLibro(prestamo->prestamoLibro);
+    liberarTFecha(prestamo->fechaRetiro);
+    liberarTFecha(prestamo->fechaDevolucion);
+    delete prestamo;
+    prestamo = NULL;
+  }
 }
 
 TSocio socioTPrestamo(TPrestamo prestamo){
