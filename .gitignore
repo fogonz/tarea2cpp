@@ -1,0 +1,9 @@
+# Ignore everything at the repo root
+/*
+
+# But keep this .gitignore tracked
+!/.gitignore
+
+# Allow the src directory and all its contents
+!/src/
+!/src/**
