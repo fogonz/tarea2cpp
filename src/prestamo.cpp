@@ -55,7 +55,7 @@ TLibro libroTPrestamo(TPrestamo prestamo){
 }
 
 bool fueRetornadoTPrestamo(TPrestamo prestamo){
-  if (prestamo -> fechaDevolucion){
+  if (prestamo -> fechaDevolucion != NULL){
     return true;
   } else {
     return false;
