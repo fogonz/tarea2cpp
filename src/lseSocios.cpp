@@ -47,10 +47,16 @@ void insertarTLSESocios(TLSESocios &lseSocios, TSocio socio){
 }
 
 bool existeSocioTLSESocios(TLSESocios lseSocios, int ci){
-	return false;
+	rep_lseSocios* actual = lseSocios;
+	while (actual != NULL && ciTSocio(actual->socio) != ci) {
+		actual = actual->sig;
+	}
+
+	return actual != NULL;
 }
 
 TSocio obtenerSocioTLSESocios(TLSESocios lseSocios, int ci){
+
     return NULL;
 }
 
