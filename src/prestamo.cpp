@@ -55,16 +55,25 @@ TLibro libroTPrestamo(TPrestamo prestamo){
 }
 
 bool fueRetornadoTPrestamo(TPrestamo prestamo){
-  if (prestamo -> fechaDevolucion){
-    return true;
-  } else {
-    return false;
+  return NULL;
+}
+
+
+void actualizarFechaDevolucionTPrestamo(TPrestamo prestamo, TFecha fechaDevolucion){
+  if (prestamo->fechaDevolucion != NULL) {
+    liberarTFecha(prestamo->fechaDevolucion);
+    prestamo->fechaDevolucion = fechaDevolucion;
   }
 }
 
-void actualizarFechaDevolucionTPrestamo(TPrestamo prestamo, TFecha fechaDevolucion){
-}
-
 TPrestamo copiarTPrestamo(TPrestamo prestamo){
-  return NULL;
+  TPrestamo copiaPrestamo = new rep_prestamo;
+  copiaPrestamo->prestamoSocio = copiarTSocio(prestamo->prestamoSocio);
+  copiaPrestamo->prestamoLibro = copiarTLibro(prestamo->prestamoLibro);
+  copiaPrestamo->fechaRetiro = copiarTFecha(prestamo->fechaRetiro);
+  if (prestamo->fechaDevolucion != NULL) {
+    copiaPrestamo->fechaDevolucion = copiarTFecha(prestamo->fechaDevolucion);
+  }
+  
+  return copiaPrestamo;
 }
