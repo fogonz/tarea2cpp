@@ -55,7 +55,11 @@ TLibro libroTPrestamo(TPrestamo prestamo){
 }
 
 bool fueRetornadoTPrestamo(TPrestamo prestamo){
-  return false;
+  if (prestamo -> fechaDevolucion){
+    return true;
+  } else {
+    return false;
+  }
 }
 
 void actualizarFechaDevolucionTPrestamo(TPrestamo prestamo, TFecha fechaDevolucion){
