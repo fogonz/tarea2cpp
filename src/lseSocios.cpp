@@ -2,20 +2,45 @@
 #include "../include/lseSocios.h"
 
 struct rep_lseSocios {
+	TSocio socio;
+	rep_lseSocios *sig;
 };
 
 TLSESocios crearTLSESociosVacia(){
-    return NULL;
-}
+	TLSESocios tlseSocio = new rep_lseSocios;
+	tlseSocio->sig = NULL;
+    return tlseSocio;
+}  
 
 bool esVaciaTLSESocios(TLSESocios lseSocios){
-	return false;
+	if (lseSocios == NULL) {
+		return false;
+	} else {
+		return true;
+	}
 }
 
 void imprimirTLSESocios(TLSESocios lseSocios){
+	printf("Lista de Socios:\n");
+	rep_lseSocios* actual = lseSocios;
+	while (actual != NULL){
+		imprimirTSocio(actual -> socio);
+		actual = actual -> sig;
+	}
 }
 
+// chequear <-----------------
 void liberarTLSESocios(TLSESocios &lseSocios){
+    if (lseSocios == NULL) return;
+
+    rep_lseSocios* actual = lseSocios->sig;
+    while (actual != NULL){
+        actual = actual->sig;
+        liberarTSocio(actual->socio);
+    }
+
+    delete lseSocios;
+    lseSocios = NULL;
 }
 
 void insertarTLSESocios(TLSESocios &lseSocios, TSocio socio){
