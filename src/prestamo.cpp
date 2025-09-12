@@ -55,15 +55,14 @@ TLibro libroTPrestamo(TPrestamo prestamo){
 }
 
 bool fueRetornadoTPrestamo(TPrestamo prestamo){
-  return NULL;
+  if (prestamo -> fechaDevolucion != NULL){
+    return true;
+  } else {
+    return false;
+  }
 }
 
-
 void actualizarFechaDevolucionTPrestamo(TPrestamo prestamo, TFecha fechaDevolucion){
-  if (prestamo->fechaDevolucion != NULL) {
-    liberarTFecha(prestamo->fechaDevolucion);
-    prestamo->fechaDevolucion = fechaDevolucion;
-  }
 }
 
 TPrestamo copiarTPrestamo(TPrestamo prestamo){
