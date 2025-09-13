@@ -69,29 +69,27 @@ void insertarTLSESocios(TLSESocios &lseSocios, TSocio socio){
 }
 
 bool existeSocioTLSESocios(TLSESocios lseSocios, int ci){
-	/*rep_lseSocios* actual = lseSocios;
+	rep_lseSocios* actual = lseSocios;
 	while (actual != NULL && ciTSocio(actual->socio) != ci) {
 		actual = actual->sig;
 	}
 
-	return actual != NULL;*/
-	return false;
+	return actual != NULL;
 }
 
 TSocio obtenerSocioTLSESocios(TLSESocios lseSocios, int ci){
-	/*if (existeSocioTLSESocios(lseSocios, ci) == true) {
+	if (existeSocioTLSESocios(lseSocios, ci) == true) {
 		rep_lseSocios* actual = lseSocios;
 		while (ciTSocio(actual->socio) != ci) {
 			actual = actual->sig;
 		}
     	return actual->socio;
 	}
-	return NULL;*/
 	return NULL;
 }
 
 TSocio obtenerNesimoTLSESocios(TLSESocios lseSocios, int n){
-	/*if (n > 0 && (nat)n <= cantidadTLSESocios(lseSocios)) {
+	if (n > 0 && (nat)n <= cantidadTLSESocios(lseSocios)) {
 		int cont = 1;
 		rep_lseSocios* actual = lseSocios;
 		while (cont != n) {
@@ -102,19 +100,18 @@ TSocio obtenerNesimoTLSESocios(TLSESocios lseSocios, int n){
 		return actual->socio;
 	}
 
-	return NULL;*/
 	return NULL;
 }
 
 nat cantidadTLSESocios(TLSESocios lseSocios){
-	/*nat cantidadSocios = 0;
+	nat cantidadSocios = 0;
 	rep_lseSocios* actual = lseSocios;
 	while (actual != NULL) {
 		actual = actual->sig;
 		cantidadSocios++;
 	}
 
-	return cantidadSocios;*/
+	return cantidadSocios;
 	return 0;
 }
 

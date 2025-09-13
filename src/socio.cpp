@@ -30,11 +30,11 @@ TSocio crearTSocio(int ci, const char nombre[MAX_NOMBRE_SOCIO], const char apell
 
 void imprimirTSocio(TSocio socio){
     if (socio != NULL) {
-        printf("Socio %d: %s %s\nFecha de alta: \n", socio->ci, socio->nombre, socio->apellido);
+        printf("Socio %d: %s %s\nFecha de alta: ", socio->ci, socio->nombre, socio->apellido);
         imprimirTFecha(socio->fechaAlta);
-        printf("Generos favoritos: \n");
+        printf("Generos favoritos: ");
         for (int i = 0; i < socio->generos.tope; i++)
-            printf("%d", socio->generos.genero[i]);
+            printf("%d \n", socio->generos.genero[i]);
     }
 }
 
