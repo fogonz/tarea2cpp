@@ -32,7 +32,7 @@ void imprimirTSocio(TSocio socio){
     if (socio != NULL) {
         printf("Socio %d: %s %s\nFecha de alta: ", socio->ci, socio->nombre, socio->apellido);
         imprimirTFecha(socio->fechaAlta);
-        printf("Generos favoritos: ");
+        printf("Generos favoritos:\n");
         for (int i = 0; i < socio->generos.tope; i++)
             printf("%d \n", socio->generos.genero[i]);
     }

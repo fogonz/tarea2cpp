@@ -1,19 +1,40 @@
 #include "../include/ldePrestamos.h"
 
 struct nodoDoble{
+    TPrestamo prestamo;
+    nodoDoble *sig;
+    nodoDoble *prev;
 };
 
 struct rep_ldePrestamos {
+    nodoDoble *inicio;
+    nodoDoble *fin;
 };
 
 TLDEPrestamos crearTLDEPrestamosVacia(){
-    return NULL;
+    TLDEPrestamos nuevo = new rep_ldePrestamos;
+    nuevo -> inicio = NULL;
+    nuevo -> fin = NULL;
+
+    return nuevo;
 }
 
 void insertarTLDEPrestamos(TLDEPrestamos &ldePrestamos, TPrestamo prestamo){
 }
 
 void liberarTLDEPrestamos(TLDEPrestamos &ldePrestamos){
+    if (ldePrestamos == NULL){ return; }
+
+    nodoDoble *actual = ldePrestamos->inicio;
+    while (actual != NULL){
+        nodoDoble *siguiente = actual->sig;
+        liberarTPrestamo(actual->prestamo);
+		delete(actual);
+        actual = siguiente;
+    }
+
+    delete ldePrestamos;
+    ldePrestamos = NULL;
 }
 
 void imprimirTLDEPrestamos(TLDEPrestamos ldePrestamos){
