@@ -12,9 +12,9 @@ TLSESocios crearTLSESociosVacia(){
 
 bool esVaciaTLSESocios(TLSESocios lseSocios){
 	if (lseSocios == NULL) {	
-		return false;
-	} else {
 		return true;
+	} else {
+		return false;
 	}
 }
 
@@ -27,7 +27,6 @@ void imprimirTLSESocios(TLSESocios lseSocios){
 	}
 }
 
-// chequear <-----------------
 void liberarTLSESocios(TLSESocios &lseSocios){
     if (lseSocios == NULL) return;
 
@@ -41,31 +40,30 @@ void liberarTLSESocios(TLSESocios &lseSocios){
 }
 
 void insertarTLSESocios(TLSESocios &lseSocios, TSocio socio){
-	//si la lista es vacia
-	if (lseSocios == NULL) {
-		TLSESocios nuevoSocio = new rep_lseSocios;
-		nuevoSocio->socio = socio;
-		nuevoSocio->sig = NULL;
-		lseSocios = nuevoSocio;
-	//si hay que insertarlo directamente al principio	
-	} else if (compararTFechas(fechaAltaTSocio(socio), fechaAltaTSocio(lseSocios->socio)) == -1) {
-		TLSESocios nuevoSocio = new rep_lseSocios;
-		nuevoSocio->socio = socio;
-		nuevoSocio->sig = lseSocios;
-		lseSocios = nuevoSocio;
-	//buscamos hasta encontrar fecha igual o mayor
-	} else {
-		rep_lseSocios* busqueda = lseSocios->sig;
-		rep_lseSocios* actual = lseSocios;
-		while (busqueda != NULL && compararTFechas(fechaAltaTSocio(busqueda->socio), fechaAltaTSocio(socio)) <= 0) {
-			busqueda = busqueda->sig;
-			actual = actual->sig;
-		}
-		TLSESocios nuevoSocio = new rep_lseSocios;
-		nuevoSocio->socio = socio;
-		nuevoSocio->sig = busqueda;
-		actual->sig = nuevoSocio;
+	TLSESocios nuevo = new rep_lseSocios;
+	nuevo->socio = socio;
+	nuevo->sig = NULL;
+
+	// Manejar caso: parámetro de entrada lseSocios = NULL || la fecha del primer elemento ya es mayor. (es decir, ya se cumple la condición de inserción en la lista)
+	// Se crea un único elemento porque no hay otros elementos presentes en la lista. 
+	if (esVaciaTLSESocios(lseSocios)==true || compararTFechas(fechaAltaTSocio(lseSocios->socio), fechaAltaTSocio(socio)) > 0){
+		nuevo->sig = lseSocios;
+		lseSocios = nuevo;
+		return;
 	}
+
+	// Vars auxiliares
+	rep_lseSocios* anterior = lseSocios;
+	rep_lseSocios* actual = lseSocios->sig;
+ 
+	// Mientras la fecha sea menor a la de la entrada, seguir iterando la lista; siempre guardando el valor anterior.
+	while(actual != NULL && compararTFechas(fechaAltaTSocio(actual->socio), fechaAltaTSocio(socio)) <= 0){
+		anterior = actual;
+		actual = actual->sig;
+	}
+
+	anterior->sig = nuevo;
+	nuevo->sig = actual;
 }
 
 bool existeSocioTLSESocios(TLSESocios lseSocios, int ci){
@@ -116,14 +114,14 @@ nat cantidadTLSESocios(TLSESocios lseSocios){
 }
 
 void removerSocioTLSESocios(TLSESocios &lseSocios, int ci){
-	/*if (existeSocioTLSESocios(lseSocios, ci) == true) {
+	if (existeSocioTLSESocios(lseSocios, ci) == true) {
 		//si el primer nodo es el buscado, directamente lo borramos 
 		if (ciTSocio(lseSocios->socio) == ci) {
 			rep_lseSocios* actual = lseSocios;
 			lseSocios = lseSocios->sig;
 			liberarTSocio(actual->socio);
 			delete actual;
-		} else {
+		} else { 	
 			//si no era el primero no queda de otra que buscarlo
 			rep_lseSocios* busqueda = lseSocios->sig;
 			rep_lseSocios* anterior = lseSocios;
@@ -135,6 +133,6 @@ void removerSocioTLSESocios(TLSESocios &lseSocios, int ci){
 			liberarTSocio(busqueda->socio);
 			delete busqueda;
 		}	
-	}*/
+	}
 }
 
