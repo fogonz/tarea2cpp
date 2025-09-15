@@ -19,7 +19,33 @@ TLDEPrestamos crearTLDEPrestamosVacia(){
     return nuevo;
 }
 
-void insertarTLDEPrestamos(TLDEPrestamos &ldePrestamos, TPrestamo prestamo){
+void insertarTLDEPrestamos(TLDEPrestamos &ldePrestamos, TPrestamo prestamo){ 
+    //creamos el nodo a insertar antes que todo para no tener que crearlo en cada if
+    nodoDoble *nuevo = new nodoDoble;
+    nuevo->prestamo = prestamo;
+    nuevo->sig = NULL;
+    nuevo->prev = NULL;
+
+    //caso que la lista es vacia le agregamos el unico prestamo:
+    //la lista pasa a apuntar al nodo nuevo y lo asignamos como primer y ultimo nodo
+    if (ldePrestamos->inicio == NULL) {
+        ldePrestamos->inicio = nuevo;
+        ldePrestamos->fin = nuevo;
+
+    //caso donde puede ir primero en la lista:
+    //el nuevo nodo pasa a ser el inicio y enganchamos el de adelante con el nuevo
+    } else if (compararTFechas(fechaRetiroTPrestamo(ldePrestamos->inicio->prestamo), fechaRetiroTPrestamo(prestamo)) < 0) {
+        nuevo->sig = ldePrestamos->inicio;
+        ldePrestamos->inicio->prev = nuevo;
+        ldePrestamos->inicio = nuevo;
+    
+    //caso donde hay que buscarlo en la lista si es igual o mayor
+    //tomar en cuenta que no solo puede haber uno repetido si no que varios (debe ir al final de ellos uwu)
+    } else {
+
+    }
+
+
 }
 
 void liberarTLDEPrestamos(TLDEPrestamos &ldePrestamos){
@@ -37,9 +63,12 @@ void liberarTLDEPrestamos(TLDEPrestamos &ldePrestamos){
     ldePrestamos = NULL;
 }
 
+//con recursion sale mas facil
 void imprimirTLDEPrestamos(TLDEPrestamos ldePrestamos){
+
 }
 
+//con recursion sale mas facil
 void imprimirInvertidoTLDEPrestamos(TLDEPrestamos ldePrestamos){
 }
 
