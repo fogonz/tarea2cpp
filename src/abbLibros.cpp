@@ -6,20 +6,39 @@ struct rep_abbLibros {
     rep_abbLibros *izq, *der;
 };
 
-// Función para crear un nuevo abb de libros vacío.
-// Devuelve un nuevo árbol binario de búsqueda vacío.
-/* Requisitos específicos de la implementación solicitada: */
-// La funcion es O(1) peor caso.
 TABBLibros crearTABBLibrosVacio(){
-    TABBLibros arbol = NULL;
+    return NULL;
 }
 
-//test 1 y 2
 void insertarLibroTABBLibros(TABBLibros &abbLibros, TLibro libro){
+    //caso base: una vez que encontramos el lugar correcto lo insertamos
+    //este caso base cubre que el arbol sea null de entrada no entra a la recursion de abajo, directamente crea el nodo y finaliza la funcion  
+    if (abbLibros == NULL) {
+        abbLibros = new rep_abbLibros;
+        abbLibros->libro = libro;
+        abbLibros->der = NULL;
+        abbLibros->izq = NULL;
+        return;
+    } 
+
+    //buscamos el lugar correcto para el nodo nuevo
+    //si el isbn del libro del arbol es mayor debo buscar a la izquierda (a la izquierda estan siempre los mas chicos)
+    if (isbnTLibro(abbLibros->libro) > isbnTLibro(libro)) {
+        insertarLibroTABBLibros(abbLibros->izq, libro);
+    //en caso contrario al ser mayor buscamos por la derecha (derecha estan los mas grandes)
+    } else if (isbnTLibro(abbLibros->libro) < isbnTLibro(libro)) {
+        insertarLibroTABBLibros(abbLibros->der, libro);
+    }
 }
+
+// Función para imprimir los libros del árbol en orden, según su ISBN. La impresión
+// de los libros se realiza con la función 'imprimirTLibro'.
+/* Requisitos específicos de la implementación solicitada: */
+// La función es O(n) peor caso, donde n es la cantidad de libros en el árbol.
 
 //test 1 y 2
 void imprimirTABBLibros(TABBLibros abbLibros){
+    
 }
 
 //test 1 y 2
