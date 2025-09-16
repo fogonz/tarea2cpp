@@ -6,6 +6,7 @@ struct rep_lseSocios {
 	rep_lseSocios *sig;
 };
 
+//mirar!!!!!!!!!!!!!!
 TLSESocios crearTLSESociosVacia(){
 	return NULL;
 }  

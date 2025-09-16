@@ -32,7 +32,7 @@ void imprimirTFecha(TFecha fecha) {
     /************ Parte 3.5 ************/
     /*Escriba el código a continuación */
     if (fecha != NULL) { 
-        printf("%u/%u/%u \n", fecha->dia, fecha->mes, fecha->anio);
+        printf("%u/%u/%u\n", fecha->dia, fecha->mes, fecha->anio);
     }
     /****** Fin de parte Parte 3.5 *****/
     
