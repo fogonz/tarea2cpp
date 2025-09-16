@@ -31,18 +31,22 @@ void insertarLibroTABBLibros(TABBLibros &abbLibros, TLibro libro){
     }
 }
 
-// Función para imprimir los libros del árbol en orden, según su ISBN. La impresión
-// de los libros se realiza con la función 'imprimirTLibro'.
-/* Requisitos específicos de la implementación solicitada: */
-// La función es O(n) peor caso, donde n es la cantidad de libros en el árbol.
-
-//test 1 y 2
 void imprimirTABBLibros(TABBLibros abbLibros){
-    
+    if (abbLibros != NULL) {
+        imprimirTABBLibros(abbLibros->izq); //imprime todo izquierda en orden
+        imprimirTLibro(abbLibros->libro); //la raiz (nodo del medio)
+        imprimirTABBLibros(abbLibros->der); //todo derecha en orden
+    }
 }
 
-//test 1 y 2
 void liberarTABBLibros(TABBLibros &abbLibros){
+    if (abbLibros != NULL) {
+        liberarTABBLibros(abbLibros->izq); //libera toda la parte izquierda
+        liberarTABBLibros(abbLibros->der); //libera toda la derecha
+        liberarTLibro(abbLibros->libro); //por ultimo libera la raiz (si la eliminamos al principio perderiamos la memoria de todo el arbol)
+        delete abbLibros; //borramos el arbol ahora si 
+        abbLibros = NULL;
+    }
 }
 
 bool existeLibroTABBLibros(TABBLibros abbLibros, int isbn){
@@ -75,6 +79,7 @@ TLibro obtenerNesimoLibroTABBLibros(TABBLibros abbLibros, int n){
     return NULL;
 }
 
+//se necesita funcion auxiliar
 TABBLibros filtradoPorGeneroTABBLibros(TABBLibros abbLibros, int genero) {
     return NULL;
 }
