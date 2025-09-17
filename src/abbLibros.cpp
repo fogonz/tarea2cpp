@@ -50,36 +50,149 @@ void liberarTABBLibros(TABBLibros &abbLibros){
 }
 
 bool existeLibroTABBLibros(TABBLibros abbLibros, int isbn){
-    return false;
+    if (abbLibros == NULL) {
+        return false;
+    } 
+
+    if (isbnTLibro(abbLibros->libro) < isbn) {
+        return existeLibroTABBLibros(abbLibros->der, isbn);
+    } else if (isbnTLibro(abbLibros->libro) > isbn) {
+        return existeLibroTABBLibros(abbLibros->izq, isbn);
+    } else {
+        return true;
+    }
 }
 
 TLibro obtenerLibroTABBLibros(TABBLibros abbLibros, int isbn){
-    return NULL;
+    if (isbnTLibro(abbLibros->libro) == isbn) {
+        return abbLibros->libro;
+    } else {
+        if (isbnTLibro(abbLibros->libro) < isbn) {
+            return obtenerLibroTABBLibros(abbLibros->der, isbn);
+        } else {
+            return obtenerLibroTABBLibros(abbLibros->izq, isbn); 
+        }
+    }
 }
 
 nat alturaTABBLibros(TABBLibros abbLibros){
-    return 0;
+    if (abbLibros == NULL) {
+        return 0;
+    } else {
+        nat alturaDer = alturaTABBLibros(abbLibros->der) + 1;
+        nat alturaIzq = alturaTABBLibros(abbLibros->izq) + 1;
+
+        if (alturaDer > alturaIzq){ 
+            return alturaDer;
+        } else {
+            return alturaIzq;
+        }
+    }
 }
 
 TLibro maxISBNLibroTABBLibros(TABBLibros abbLibros){
-    return NULL;
+    if (abbLibros->der == NULL) {
+        return abbLibros->libro;
+    } else {
+        return maxISBNLibroTABBLibros(abbLibros->der);
+    }
+}
+
+//funcion aux para encontrar el maximo nodo izquierdo
+TABBLibros removerMaxNodoIzq(TABBLibros &l) {
+    if (l->der == NULL) {
+        TABBLibros maxNodo = l;
+        l = l->izq;
+        return maxNodo;
+    } else {
+        return removerMaxNodoIzq(l->der); 
+    }
 }
 
 void removerLibroTABBLibros(TABBLibros &abbLibros, int isbn){
+    if (isbnTLibro(abbLibros->libro) < isbn) {
+        removerLibroTABBLibros(abbLibros->der, isbn);
+    } else if (isbnTLibro(abbLibros->libro) > isbn) {
+        removerLibroTABBLibros(abbLibros->izq, isbn);
+    } else {
+        //si entro a este else encontramos el isbn, toca ver que tipo de nodo es
+        if (abbLibros->der == NULL) {
+            //hay que borrar el grande
+            TABBLibros aBorrar = abbLibros;
+            abbLibros = abbLibros->izq;
+            liberarTLibro(aBorrar->libro);
+            delete aBorrar;
+        } else if (abbLibros->izq == NULL){
+            //hay que borrar el chico
+            TABBLibros aBorrar = abbLibros;
+            abbLibros = abbLibros->der;
+            liberarTLibro(aBorrar->libro);
+            delete aBorrar;
+        } else {
+            //caso en donde el nodo tiene los dos elementos con valores
+            //debemos buscar el mayor del subarbol izquierdo (funcion aux)
+            TABBLibros maxNodoIzq = removerMaxNodoIzq(abbLibros->izq);
+            TLibro copia = copiarTLibro(maxNodoIzq->libro); 
+            liberarTLibro(abbLibros->libro);               
+            abbLibros->libro = copia;                     
+            liberarTLibro(maxNodoIzq->libro);               
+            delete maxNodoIzq; 
+        }
+    }
 }
 
 int cantidadTABBLibros(TABBLibros abbLibros){
-    return 0;
+    if (abbLibros == NULL) {
+        return 0;
+    } else {
+        return 1 + cantidadTABBLibros(abbLibros->izq) + cantidadTABBLibros(abbLibros->der);
+    }
 }
 
+// Aux para obtenerNesimoLibroTABBLibros
 void obtenerNesimoLibroTABBLibrosAux(TABBLibros abbLibros, int n, int &k, TLibro &res){
+    if (abbLibros == NULL) return;
+    
+    obtenerNesimoLibroTABBLibrosAux(abbLibros->izq, n, k, res);
+    k++;
+
+    if (k == n) res = abbLibros->libro;
+        obtenerNesimoLibroTABBLibrosAux(abbLibros->der, n, k, res);
 }
 
 TLibro obtenerNesimoLibroTABBLibros(TABBLibros abbLibros, int n){
-    return NULL;
+    int k = 0;
+    TLibro res = NULL;
+    obtenerNesimoLibroTABBLibrosAux(abbLibros, n, k, res);
+    return res;
 }
 
-//se necesita funcion auxiliar
+//funcion auxiliar para insertar filtrado
+void insertarFiltrados(TABBLibros origen, TABBLibros &destino) {
+    if (origen == NULL) return;
+    insertarFiltrados(origen->izq, destino);
+    TLibro copia = copiarTLibro(origen->libro);
+    insertarLibroTABBLibros(destino, copia);
+    insertarFiltrados(origen->der, destino);
+}
+
 TABBLibros filtradoPorGeneroTABBLibros(TABBLibros abbLibros, int genero) {
-    return NULL;
+    if (abbLibros == NULL) return NULL;
+    TABBLibros nuevo = crearTABBLibrosVacio();
+
+    if (idGeneroTLibro(abbLibros->libro) == genero) {
+        TLibro copia = copiarTLibro(abbLibros->libro);
+        insertarLibroTABBLibros(nuevo, copia);
+    }
+
+    TABBLibros izq = filtradoPorGeneroTABBLibros(abbLibros->izq, genero);
+    TABBLibros der = filtradoPorGeneroTABBLibros(abbLibros->der, genero);
+
+    insertarFiltrados(izq, nuevo);
+    insertarFiltrados(der, nuevo);
+
+    liberarTABBLibros(izq);
+    liberarTABBLibros(der);
+
+    return nuevo;
 }
